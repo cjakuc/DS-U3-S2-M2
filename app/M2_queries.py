@@ -45,17 +45,16 @@ print("RESULT:", len(result))
 #"""
 
 #
-# APPROACH 2 (needs updating / wasn't working sorry!)
+# APPROACH 2
 #
-#my_dict = { "a": 1, "b": ["dog", "cat", 42], "c": 'true' }
-#insertion_query = f"INSERT INTO test_table (name, data) VALUES (%s, %s)"
-#cursor.execute(insertion_query,
-#  ('A rowwwww', 'null')
-#)
-#cursor.execute(insertion_query,
-#  ('Another row, with JSONNNNN', json.dumps(my_dict))
-#)
-#cursor.execute(insertion_query)
+my_dict = { "a": 1, "b": ["dog", "cat", 42], "c": 'true' }
+insertion_query = "INSERT INTO test_table (name, data) VALUES (%s, %s)"
+cursor.execute(insertion_query,
+    ('A rowwwww', 'null')
+)
+cursor.execute(insertion_query,
+  ('Another row, with JSONNNNN', json.dumps(my_dict))
+)
 
 #
 # APPROACH 3 (multi-row insert!)
