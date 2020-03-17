@@ -3,15 +3,19 @@ import os
 from dotenv import load_dotenv
 import json
 from psycopg2.extras import execute_values
+
 load_dotenv() # look in the .env file for env vars, and add them to the env
 DB_NAME = os.getenv("DB_NAME", default="OOPS")
 DB_USER = os.getenv("DB_USER", default="OOPS")
 DB_PASSWORD = os.getenv("DB_PASSWORD", default="OOPS")
 DB_HOST = os.getenv("DB_HOST", default="OOPS")
+
 connection = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASSWORD, host=DB_HOST)
 print("CONNECTION:", connection)
+
 cursor = connection.cursor()
 print("CURSOR:", cursor)
+
 #
 # TABLE CREATION
 #
@@ -26,6 +30,7 @@ cursor.execute(query)
 cursor.execute("SELECT * from test_table;")
 result = cursor.fetchall()
 print("RESULT:", len(result))
+
 #
 # DATA INSERTION
 #
@@ -38,6 +43,7 @@ print("RESULT:", len(result))
 #    ('A row name', null),
 #    ('Another row, with JSON', '{ "a": 1, "b": ["dog", "cat", 42], "c": true }'::JSONB)
 #"""
+
 #
 # APPROACH 2 (needs updating / wasn't working sorry!)
 #
@@ -50,6 +56,7 @@ print("RESULT:", len(result))
 #  ('Another row, with JSONNNNN', json.dumps(my_dict))
 #)
 #cursor.execute(insertion_query)
+
 #
 # APPROACH 3 (multi-row insert!)
 #
@@ -64,5 +71,6 @@ execute_values(cursor, insertion_query, [
 cursor.execute("SELECT * from test_table;")
 result = cursor.fetchall()
 print("RESULT:", len(result))
+
 # ACTUALLY SAVE THE TRANSACTIONS
 connection.commit()
