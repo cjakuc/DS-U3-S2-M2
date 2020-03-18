@@ -49,7 +49,7 @@ execute_values(cursor, survival_insertion_query, survival_list)
 # 
 attribute_query="""
 CREATE TABLE IF NOT EXISTS attributes (
-  id INTEGER REFERENCES survival_status (id)
+  id INTEGER PRIMARY KEY NOT NULL
   ,Pclass INTEGER NOT NULL
   ,Name TEXT NOT NULL
   ,Sex TEXT NOT NULL
@@ -64,12 +64,12 @@ cursor.execute(attribute_query)
 
 
 # Insert data into attributes table
-attributes_insertion_query = """INSERT INTO attributes (Pclass,Name,Sex,Age,Sibling_Spouses_Aboard,Parents_Children_Aboard,Fare)
+attributes_insertion_query = """INSERT INTO attributes (id,Pclass,Name,Sex,Age,Sibling_Spouses_Aboard,Parents_Children_Aboard,Fare)
 VALUES %s
 ON CONFLICT DO NOTHING
 """
 attributes_df = df.drop(columns=['Survived'])
-attributes_list = list(attributes_df.itertuples(index=False))
+attributes_list = list(attributes_df.itertuples(index=True))
 execute_values(cursor, attributes_insertion_query, attributes_list)
 
 
