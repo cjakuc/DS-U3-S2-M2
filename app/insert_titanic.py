@@ -17,10 +17,10 @@ connection = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASSWORD
 
 cursor = connection.cursor()
 
-temp = """
-DROP TABLE survival_status, attributes;
-"""
-cursor.execute(temp)
+# temp = """
+# DROP TABLE survival_status, attributes;
+# """
+# cursor.execute(temp)
 
 # 
 # TABLE 1 CREATION
@@ -39,10 +39,10 @@ VALUES %s
 ON CONFLICT DO NOTHING
 """
 survival_df = df['Survived']
-survival_list = list(zip(survival_df.index,survival_df))
+survival_list = list(zip(survival_df.index, survival_df))
 execute_values(cursor, survival_insertion_query, survival_list)
 
-
+# connection.commit()
 
 # 
 # TABLE 2 CREATION
@@ -75,3 +75,6 @@ execute_values(cursor, attributes_insertion_query, attributes_list)
 
 # ACTUALLY SAVE THE TRANSACTIONS
 connection.commit()
+
+# Close the connection
+connection.close()
